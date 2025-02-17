@@ -7,6 +7,8 @@
 // @version     1.0
 // @author      njko39
 // @description 17/02/2025, 21:54:55
+// @downloadURL https://github.com/njko39/MAL-RU-Enhancements/raw/refs/heads/main/MAL-RU-Enhancements.js
+// @homepageURL https://github.com/njko39/MAL-RU-Enhancements
 // ==/UserScript==
 
 // ОПИСАНИЯ
