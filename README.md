@@ -1,6 +1,7 @@
 # MAL-RU-Enhancements
 Скрипт, чтобы переводить названия и описания аниме на [MyAnimeList](https://myanimelist.net/). В приоритете берёт описание и название с [Шикимори](https://shikimori.one/), но если их там нет, или сайт недоступен, то с этой гитхаб страницы.
 ![{29A53DE4-4BFA-474C-8106-5AFD31105CB9}](https://github.com/user-attachments/assets/4f9398f1-dfb4-4728-882c-2fe67ffa629f)
+[Устанвоить с GitHub](https://raw.githubusercontent.com/njko39/MAL-RU-Enhancements/refs/heads/main/MAL-RU-Enhancements.js)
 # Как предложить описание, которого нет
 Предпочтительнее будет предложить описание на странице аниме на Шикимори, чтобы оно появилось сразу везде.
 ## Шикимори
