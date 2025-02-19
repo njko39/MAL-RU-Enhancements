@@ -11,7 +11,12 @@
 // @homepageURL https://github.com/njko39/MAL-RU-Enhancements
 // @updateURL https://openuserjs.org/meta/mwehehe/My_Script.meta.js
 // @license MIT
+// @grant none
 // ==/UserScript==
+
+// ==OpenUserJS==
+// @author mwehehe
+// ==/OpenUserJS==
 
 /*
     Эта часть скрипта заменяет описание и название через API.
