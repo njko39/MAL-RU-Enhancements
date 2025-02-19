@@ -8,6 +8,7 @@
 // @description Добавляет русское описание аниме с Шикимори или GitHub на страницу аниме на MAL
 // @downloadURL https://github.com/njko39/MAL-RU-Enhancements/raw/refs/heads/main/MAL-RU-Enhancements.js
 // @homepageURL https://github.com/njko39/MAL-RU-Enhancements
+// @license MIT
 // ==/UserScript==
 
 /*
