@@ -2,7 +2,6 @@
 // @name        MAL-RU-Enhancements
 // @namespace   https://github.com/njko39/MAL-RU-Enhancements
 // @match       https://myanimelist.net/anime/*
-// @match       https://myanimelist.net/manga/*
 // @grant       none
 // @version     1.2
 // @author      njko39
