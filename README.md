@@ -22,8 +22,19 @@
 Создать pull request новых файлов в этот репозиторий.
 
 # Другие полезные скрипты
-- [Watch Order & Adaptations Finder](https://greasyfork.org/en/scripts/407727-watch-order-adaptations-finder) by [hacker09](https://greasyfork.org/en/users/670188-hacker09) — Помогает быстро посмотреть всю франшизу и в каком порядке смотреть через chiaki.site
-- [Total Duration Time + Total Episodes Of Any Animes Franchises](https://greasyfork.org/en/scripts/414627-total-duration-time-total-episodes-of-any-animes-franchises) by [hacker09](https://greasyfork.org/en/users/670188-hacker09) — Показывает общее количество серий и длительность всей франшизы на chiaki.site
-- [Add new entries to your MyAnimeList - Chiaki](https://greasyfork.org/en/scripts/437782-add-new-entries-to-your-myanimelist-chiaki) by [hacker09](https://greasyfork.org/en/users/670188-hacker09) — Позволяет добавлять аниме в список сразу со страницы франшизы на chiaki.site
-- [Better Buttons to Change The Status Of Animes/Mangas And To Add Scores](https://greasyfork.org/en/scripts/408439-better-buttons-to-change-the-status-of-animes-mangas-and-to-add-scores) by [hacker09](https://greasyfork.org/en/users/670188-hacker09) — Помогает оценивать сразу всю франшизу на MAL
+> [Watch Order & Adaptations Finder](https://greasyfork.org/en/scripts/407727-watch-order-adaptations-finder) by [hacker09](https://greasyfork.org/en/users/670188-hacker09)
+
+Помогает быстро посмотреть всю франшизу и в каком порядке смотреть через chiaki.site
+
+> [Total Duration Time + Total Episodes Of Any Animes Franchises](https://greasyfork.org/en/scripts/414627-total-duration-time-total-episodes-of-any-animes-franchises) by [hacker09](https://greasyfork.org/en/users/670188-hacker09)
+
+Показывает общее количество серий и длительность всей франшизы на chiaki.site
+
+> [Add new entries to your MyAnimeList - Chiaki](https://greasyfork.org/en/scripts/437782-add-new-entries-to-your-myanimelist-chiaki) by [hacker09](https://greasyfork.org/en/users/670188-hacker09)
+
+Позволяет добавлять аниме в список сразу со страницы франшизы на chiaki.site
+
+> [Better Buttons to Change The Status Of Animes/Mangas And To Add Scores](https://greasyfork.org/en/scripts/408439-better-buttons-to-change-the-status-of-animes-mangas-and-to-add-scores) by [hacker09](https://greasyfork.org/en/users/670188-hacker09)
+
+Помогает оценивать сразу всю франшизу на MAL
 
