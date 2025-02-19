@@ -4,7 +4,7 @@
 // @match       https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/manga/*
 // @grant       none
-// @version     1.1
+// @version     1.2
 // @author      njko39
 // @description Translate some of MAL elements into russian
 // @downloadURL https://github.com/njko39/MAL-RU-Enhancements/raw/refs/heads/main/MAL-RU-Enhancements.js
@@ -16,8 +16,14 @@
 */
 
 // Function to create the tab HTML
-function createTabHtml(newDescription, originalDescription, shikimoriUrl) {
-  const tabHtml = `
+function createTabHtml(newDescription, originalDescription, showSource, shikimoriUrl) {
+  const sourceHtml = showSource ? `
+    <div class="source">
+      Источник: <a href="https://shikimori.one${shikimoriUrl}" target="_blank">Шикимори</a>
+    </div>
+  ` : '';
+
+  return `
     <div class="block">
       <div class="tab-button-container">
         <button class="tablinks" onclick="openTab(event, 'newDescription')">RUS</button>
@@ -26,9 +32,7 @@ function createTabHtml(newDescription, originalDescription, shikimoriUrl) {
 
       <div id="newDescription" class="tabcontent">
         ${newDescription || ''}
-        <div class="source">
-          Источник: <a href="https://shikimori.one${shikimoriUrl}" target="_blank">Шикимори</a>
-        </div>
+        ${sourceHtml}
       </div>
 
       <div id="originalDescription" class="tabcontent" style="display:none;">
@@ -36,7 +40,6 @@ function createTabHtml(newDescription, originalDescription, shikimoriUrl) {
       </div>
     </div>
   `;
-  return tabHtml;
 }
 
 // Function to replace special tags with links
@@ -66,104 +69,222 @@ function processContentLinks(description) {
   return processedDescription;
 }
 
-// Function to replace the description text and title
-function replaceDescriptionTextAndTitle() {
+// Function to fetch from GitHub
+async function fetchFromGithub(url) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      return null;
+    }
+    const text = await response.text();
+    return text.trim();
+  } catch (error) {
+    console.log('Error fetching from GitHub:', error);
+    return null;
+  }
+}
+
+// Function to fetch title from GitHub
+async function fetchGithubTitle(animeId) {
+  const titleUrl = `https://raw.githubusercontent.com/njko39/MAL-RU-Enhancements/main/assets/anime/${animeId}/title.md`;
+  return await fetchFromGithub(titleUrl);
+}
+
+// Function to fetch description from GitHub
+async function fetchGithubDescription(animeId) {
+  const descriptionUrl = `https://raw.githubusercontent.com/njko39/MAL-RU-Enhancements/main/assets/anime/${animeId}/description.md`;
+  return await fetchFromGithub(descriptionUrl);
+}
+
+// Main function
+async function replaceDescriptionTextAndTitle() {
   const currentPageUrl = window.location.href;
   const urlParts = currentPageUrl.split('/');
-  const idPart = urlParts.slice(-2, -1).join('/');
-  const animeId = idPart.replace(/\D+/g, '');
+
+  // Find the index of "anime" in the URL parts
+  const animeIndex = urlParts.indexOf('anime');
+  if (animeIndex === -1) {
+    console.log('Anime section not found in URL');
+    return;
+  }
+
+  // Get the ID part (next part after "anime")
+  const animeIdPart = urlParts[animeIndex + 1];
+  const animeId = animeIdPart.replace(/\D/g, ''); // Remove non-digit characters
+
+  if (!animeId) {
+    console.log('Anime ID not found');
+    return;
+  }
 
   const shikimoriApiUrl = `https://shikimori.one/api/animes/${animeId}`;
 
-  fetch(shikimoriApiUrl)
-    .then(response => response.json())
-    .then(data => {
-      let description = data.description;
-      const russianName = data.russian;
-      const shikimoriPageUrl = data.url;
+  try {
+    const response = await fetch(shikimoriApiUrl);
 
-      // Check if description exists
-      let processedDescription = '';
-      if (typeof description === 'string' && description !== '') {
-        processedDescription = processContentLinks(description);
-      } else {
-        processedDescription = `У аниме пока что нет описания на русском. Вы можете предложить его на <a href="https://shikimori.one${data.url}" target="_blank">Шикимори</a>, и оно появится.`;
-      }
+    // Fetch title and description separately
+    let shikimoriTitle = null;
+    let shikimoriDescription = null;
+    let shikimoriUrl = '';
 
-      // Add tab CSS (including styling for the source block)
-      const style = document.createElement('style');
-      style.innerHTML = `
-          .block {
-            padding-bottom: 1.5em;
-          }
-          .tab-button-container {
-            margin-bottom: 1.5em;
-          }
-          .source {
-            text-align: right;
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 1em;
-          }
-          .source a {
-            color: #999;
-            text-decoration: none;
-          }
-          .source a:hover {
-            text-decoration: underline;
-          }
-      `;
-      document.head.appendChild(style);
+    if (response.ok) {
+      const dataResponse = await response.json();
+      shikimoriTitle = dataResponse.russian;
+      shikimoriDescription = dataResponse.description;
+      shikimoriUrl = dataResponse.url || `/${animeId}`;
 
-      // Add tab JavaScript
-      const script = document.createElement('script');
-      script.innerHTML = `
-        function openTab(evt, tabName) {
-          const tabcontent = document.getElementsByClassName("tabcontent");
-          for (let i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-          }
-          const tablinks = document.getElementsByClassName("tablinks");
-          for (let i = 0; i < tablinks.length; i++) {
-            tablinks[i].className = tablinks[i].className.replace(" active", "");
-          }
-          document.getElementById(tabName).style.display = "block";
-          evt.currentTarget.className += " active";
-        }
-      `;
-      document.body.appendChild(script);
+      // Determine if the description came from Shikimori (not null)
+      const cameFromShikimoriDescription = shikimoriDescription !== null;
 
-      // Replace title with Russian name and move original title
-      const titleElement = document.querySelector('h1.title-name.h1_bold_none strong');
-      const englishTitleElement = document.querySelector('p.title-english.title-inherit');
-      if (titleElement && russianName) {
-        const originalTitle = titleElement.textContent;
-        titleElement.textContent = russianName;
-        if (englishTitleElement) {
-          englishTitleElement.textContent = originalTitle;
-        } else {
-          const newEnglishTitleElement = document.createElement('p');
-          newEnglishTitleElement.className = 'title-english title-inherit';
-          newEnglishTitleElement.textContent = originalTitle;
-          titleElement.parentNode.appendChild(newEnglishTitleElement);
-        }
-      }
+      // Try GitHub if needed
+      const githubTitle = shikimoriTitle ? null : await fetchGithubTitle(animeId);
+      const githubDescription = cameFromShikimoriDescription ? null : await fetchGithubDescription(animeId);
 
-      // Create tab for descriptions
-      const descElement = document.querySelector('p[itemprop="description"]');
-      const originalDescription = descElement.innerHTML;
+      // Combine data
+      const data = {
+        russian: shikimoriTitle || githubTitle,
+        description: shikimoriDescription || githubDescription,
+        url: shikimoriUrl
+      };
 
-      const processedDescriptionWithSource = processedDescription;
+      // Pass the source visibility flag (only when Shikimori provided a description)
+      processAndDisplayData(data, animeId, cameFromShikimoriDescription, shikimoriUrl);
+    } else {
+      // If Shikimori API returns 404, try GitHub for title and description
+      const githubTitle = await fetchGithubTitle(animeId);
+      const githubDescription = await fetchGithubDescription(animeId);
 
-      // Pass shikimoriPageUrl when creating the tab HTML
-      const tabHtml = createTabHtml(processedDescriptionWithSource, originalDescription, shikimoriPageUrl);
-      descElement.outerHTML = tabHtml;
-      document.getElementsByClassName("tablinks")[0].click();
-    })
-    .catch(error => {
-      const descElement = document.querySelector('p[itemprop="description"]');
+      // Combine data
+      const data = {
+        russian: githubTitle,
+        description: githubDescription,
+        url: `/${animeId}`
+      };
+
+      // Pass the source visibility flag (false since we didn't use Shikimori)
+      processAndDisplayData(data, animeId, false, `/${animeId}`);
+    }
+  } catch (error) {
+    console.log('Error:', error);
+    const descElement = document.querySelector('p[itemprop="description"]');
+    if (descElement) {
       descElement.textContent = 'Error fetching description: ' + error;
-    });
+    }
+  }
+}
+
+// Function to add specific CSS when title is replaced
+function addTitleCSS() {
+  // Remove existing styles with the same ID to prevent duplication
+  const existingStyle = document.getElementById('titleCSS');
+  if (existingStyle) {
+    existingStyle.remove();
+  }
+
+  // Create new style element
+  const style = document.createElement('style');
+  style.id = 'titleCSS';
+  style.textContent = `
+    .h1.edit-info div.h1-title h1 {
+      display: inline-block !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+// Helper function to process and display data
+function processAndDisplayData(data, animeId, cameFromShikimori, shikimoriUrl) {
+  let description = data.description;
+  const russianName = data.russian;
+
+  const shikimoriPageUrl = shikimoriUrl || `/${animeId}`;
+
+  // Handle title update separately
+  if (russianName) {
+    const titleElement = document.querySelector('h1.title-name.h1_bold_none strong');
+    const englishTitleElement = document.querySelector('p.title-english.title-inherit');
+    if (titleElement) {
+      const originalTitle = titleElement.textContent;
+      titleElement.textContent = russianName;
+      if (englishTitleElement) {
+        englishTitleElement.textContent = originalTitle;
+      } else {
+        const newEnglishTitleElement = document.createElement('p');
+        newEnglishTitleElement.className = 'title-english title-inherit';
+        newEnglishTitleElement.textContent = originalTitle;
+        titleElement.parentNode.appendChild(newEnglishTitleElement);
+      }
+    }
+
+    // Add the CSS after title replacement
+    addTitleCSS();
+  }
+
+  // Process description
+  let processedDescription = '';
+  if (typeof description === 'string' && description !== '') {
+    processedDescription = processContentLinks(description);
+  } else {
+    processedDescription = `У аниме пока что нет описания на русском. Вы можете предложить его на <a href="https://shikimori.one${shikimoriPageUrl}" target="_blank">Шикимори</a> или <a href="https://github.com/njko39/MAL-RU-Enhancements/" target="_blank">GitHub странице скрипта</a>, и оно появится здесь.`;
+  }
+
+  // Add tab CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    .block {
+      padding-bottom: 1.5em;
+    }
+    .tab-button-container {
+      margin-bottom: 1.5em;
+    }
+    .source {
+      text-align: right;
+      font-size: 0.8em;
+      color: #666;
+      margin-top: 1em;
+    }
+    .source a {
+      color: #999;
+      text-decoration: none;
+    }
+    .source a:hover {
+      text-decoration: underline;
+    }
+  `;
+  document.documentElement.appendChild(style);
+
+  // Add tab JavaScript
+  const script = document.createElement('script');
+  script.textContent = `
+    function openTab(evt, tabName) {
+      const tabcontent = document.getElementsByClassName("tabcontent");
+      for (let i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+      }
+      const tablinks = document.getElementsByClassName("tablinks");
+      for (let i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+      }
+      document.getElementById(tabName).style.display = "block";
+      evt.currentTarget.className += " active";
+    }
+  `;
+  document.body.appendChild(script);
+
+  // Create tab for descriptions
+  const descElement = document.querySelector('p[itemprop="description"]');
+  if (!descElement) {
+    console.log('Description element not found');
+    return;
+  }
+
+  const originalDescription = descElement.innerHTML;
+
+  // Create tab HTML with appropriate source visibility
+  const tabHtml = createTabHtml(processedDescription, originalDescription, cameFromShikimori, shikimoriPageUrl);
+
+  descElement.outerHTML = tabHtml;
+  document.getElementsByClassName("tablinks")[0].click();
 }
 
 // Run the function when the page loads
@@ -357,6 +478,3 @@ function replaceNoticeText() {
 
 // Run the new functionality
 replaceNoticeText();
-
-
-
