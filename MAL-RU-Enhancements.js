@@ -10,8 +10,8 @@
 // @downloadURL https://github.com/njko39/MAL-RU-Enhancements/raw/refs/heads/main/MAL-RU-Enhancements.js
 // @homepageURL https://github.com/njko39/MAL-RU-Enhancements
 // @updateURL   https://openuserjs.org/meta/mwehehe/My_Script.meta.js
-// @license MIT
-// @grant none
+// @license     MIT
+// @grant       none
 // ==/UserScript==
 
 // ==OpenUserJS==
