@@ -2,7 +2,7 @@
 // @name        MyAnimeList(MAL) — русское описание аниме
 // @namespace   https://github.com/njko39/MAL-RU-Enhancements
 // @match       https://myanimelist.net/anime/*
-// @grant       none
+// @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://myanimelist.net&size=64
 // @version     1.2
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/MAL-RU-Enhancements)
