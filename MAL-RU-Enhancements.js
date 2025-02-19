@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        MyAnimeList — русское описание аниме
+// @name        MyAnimeList(MAL) — русское описание аниме
 // @namespace   https://github.com/njko39/MAL-RU-Enhancements
 // @match       https://myanimelist.net/anime/*
 // @grant       none
