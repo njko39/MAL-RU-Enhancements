@@ -1,11 +1,11 @@
 // ==UserScript==
-// @name        MAL-RU-Enhancements
+// @name        MyAnimeList — русское описание аниме
 // @namespace   https://github.com/njko39/MAL-RU-Enhancements
 // @match       https://myanimelist.net/anime/*
 // @grant       none
 // @version     1.2
 // @author      njko39
-// @description Translate some of MAL elements into russian
+// @description Добавляет русское описание аниме с Шикимори или GitHub на страницу аниме на MAL
 // @downloadURL https://github.com/njko39/MAL-RU-Enhancements/raw/refs/heads/main/MAL-RU-Enhancements.js
 // @homepageURL https://github.com/njko39/MAL-RU-Enhancements
 // ==/UserScript==
