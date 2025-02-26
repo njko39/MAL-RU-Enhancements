@@ -2,8 +2,9 @@
 // @name        MyAnimeList(MAL) — русское описание аниме
 // @namespace   https://github.com/njko39/MAL-RU-Enhancements
 // @match       https://myanimelist.net/anime/*
+// @match       https://myanimelist.net/anime.php?id=*
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://myanimelist.net&size=64
-// @version     1.2
+// @version     1.3
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/MAL-RU-Enhancements)
 // @description Добавляет русское описание аниме с Шикимори или GitHub на страницу аниме на MAL
@@ -110,19 +111,43 @@ async function replaceDescriptionTextAndTitle() {
 
   // Find the index of "anime" in the URL parts
   const animeIndex = urlParts.indexOf('anime');
+
+  let animeId = null;
+
   if (animeIndex === -1) {
-    console.log('Anime section not found in URL');
-    return;
+    // "anime" not found in path, check if the URL contains "/anime.php?"
+    const parser = document.createElement('a');
+    parser.href = currentPageUrl;
+
+    // Check if the URL path includes "/anime.php"
+    if (parser.pathname.includes('/anime.php')) {
+      const searchParams = new URLSearchParams(parser.search);
+      if (searchParams.has('id')) {
+        animeId = searchParams.get('id');
+        // Verify if it's a valid number
+        if (isNaN(animeId)) {
+          console.log('Anime ID not found');
+          return;
+        }
+      } else {
+        console.log('Anime section not found in URL');
+        return;
+      }
+    } else {
+      console.log('Anime section not found in URL');
+      return;
+    }
+  } else {
+    // "anime" found in path, extract ID as before
+    const animeIdPart = urlParts[animeIndex + 1];
+    animeId = animeIdPart.replace(/\D/g, '');
+    if (!animeId) {
+      console.log('Anime ID not found');
+      return;
+    }
   }
 
-  // Get the ID part (next part after "anime")
-  const animeIdPart = urlParts[animeIndex + 1];
-  const animeId = animeIdPart.replace(/\D/g, ''); // Remove non-digit characters
-
-  if (!animeId) {
-    console.log('Anime ID not found');
-    return;
-  }
+  console.log('Anime ID:', animeId);
 
   const shikimoriApiUrl = `https://shikimori.one/api/animes/${animeId}`;
 
@@ -316,7 +341,7 @@ function replaceText(node) {
       .replace(/Licensors/g, "Лицензировано")
       .replace(/Producers/g, "Продюсеры")
       .replace(/Broadcast/g, "Показ")
-      .replace(/Premiered/g, "Пьера")
+      .replace(/Premiered/g, "Премьера")
       .replace(/Aired/g, "Дата")
       .replace(/Status/g, "Статус")
       .replace(/Episodes/g, "Эпизоды")
@@ -384,7 +409,11 @@ function updateScoreAttributes() {
     div.setAttribute('data-title', 'Рейтинг');
     const userValue = div.getAttribute('data-user');
     if (userValue) {
-      div.setAttribute('data-user', userValue.replace(/users$/, 'оценок'));
+      if (userValue === '- user') {
+        div.setAttribute('data-user', 'Нет оценок');
+      } else {
+        div.setAttribute('data-user', userValue.replace(/users$/, 'оценок'));
+      }
     }
   });
 }
