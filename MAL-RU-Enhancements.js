@@ -4,7 +4,7 @@
 // @match       https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/anime.php?id=*
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://myanimelist.net&size=64
-// @version     1.4
+// @version     1.5
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/MAL-RU-Enhancements)
 // @description Добавляет русское описание аниме с Шикимори или GitHub на страницу аниме на MAL
@@ -262,27 +262,35 @@ function processAndDisplayData(data, animeId, cameFromShikimori, shikimoriUrl) {
 
   // Add tab CSS
   const style = document.createElement('style');
-  style.textContent = `
-    .block {
-      padding-bottom: 1.5em;
-    }
-    .tab-button-container {
-      margin-bottom: 1.5em;
-    }
-    .source {
-      text-align: right;
-      font-size: 0.8em;
-      color: #666;
-      margin-top: 1em;
-    }
-    .source a {
-      color: #999;
-      text-decoration: none;
-    }
-    .source a:hover {
-      text-decoration: underline;
-    }
-  `;
+style.textContent = `
+  .block {
+    padding-bottom: 1.5em;
+  }
+  .tab-button-container {
+    margin-bottom: 1.5em;
+  }
+
+  /* ВАЖНО: сохраняет \n и пустые строки из GitHub */
+  .tabcontent {
+    white-space: pre-wrap;       /* переносы строк + перенос по словам */
+    overflow-wrap: anywhere;     /* чтобы длинные строки не ломали верстку */
+  }
+
+  .source {
+    text-align: right;
+    font-size: 0.8em;
+    color: #666;
+    margin-top: 1em;
+  }
+  .source a {
+    color: #999;
+    text-decoration: none;
+  }
+  .source a:hover {
+    text-decoration: underline;
+  }
+`;
+
   document.documentElement.appendChild(style);
 
   // Add tab JavaScript
