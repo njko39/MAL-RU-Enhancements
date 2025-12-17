@@ -12,6 +12,9 @@
 ## Шикимори
 ![image](https://github.com/user-attachments/assets/4da757bb-840a-4002-afbc-5df358269006)
 
+## Telegram
+Используйте [@MalRuSuggestionBot](https://t.me/MalRuSuggestionBot)
+
 ## GitHub
 [На странице GitHub](https://github.com/njko39/MAL-RU-Enhancements) в папке `assets/anime/` нужно создать папку с названием ID аниме и создать `description.md` для описания, или `title.md` для названия. Если Шикимори доступен и на нём есть описание и название у этого аниме, то файлы на гитхабе игнорируются.
 ![image](https://github.com/user-attachments/assets/e4a4f61d-e6ff-484e-990e-1526282d05c8)
