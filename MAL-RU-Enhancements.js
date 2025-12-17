@@ -4,7 +4,7 @@
 // @match       https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/anime.php?id=*
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://myanimelist.net&size=64
-// @version     1.3
+// @version     1.4
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/MAL-RU-Enhancements)
 // @description Добавляет русское описание аниме с Шикимори или GitHub на страницу аниме на MAL
@@ -257,7 +257,7 @@ function processAndDisplayData(data, animeId, cameFromShikimori, shikimoriUrl) {
   if (typeof description === 'string' && description !== '') {
     processedDescription = processContentLinks(description);
   } else {
-    processedDescription = `У аниме пока что нет описания на русском. Вы можете предложить его на <a href="https://shikimori.one${shikimoriPageUrl}" target="_blank">Шикимори</a> или <a href="https://github.com/njko39/MAL-RU-Enhancements/" target="_blank">GitHub странице скрипта</a>, и оно появится здесь.`;
+    processedDescription = `У аниме пока что нет описания на русском. Вы можете предложить его на <a href="https://shikimori.one${shikimoriPageUrl}" target="_blank">Шикимори</a> или через телеграм бота <a href="https://t.me/MalRuSuggestionBot" target="_blank">@MalRuSuggestionBot</a>, и оно появится здесь. <a href="https://github.com/njko39/MAL-RU-Enhancements/" target="_blank">Страница скрипта на GitHub</a>.`;
   }
 
   // Add tab CSS
