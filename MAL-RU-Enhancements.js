@@ -4,7 +4,7 @@
 // @match       https://myanimelist.net/anime/*
 // @match       https://myanimelist.net/anime.php?id=*
 // @icon        https://t3.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=http://myanimelist.net&size=64
-// @version     1.5
+// @version     1.6
 // @author      njko39
 // @copyright   2025, njko39 (https://github.com/njko39/MAL-RU-Enhancements)
 // @description Добавляет русское описание аниме с Шикимори или GitHub на страницу аниме на MAL
@@ -289,6 +289,10 @@ style.textContent = `
   .source a:hover {
     text-decoration: underline;
   }
+
+  #newDescription {
+  font-size: 1.1em; /* размер русского описания */
+}
 `;
 
   document.documentElement.appendChild(style);
