@@ -7,13 +7,9 @@
 
 [Установить с GitHub](https://raw.githubusercontent.com/njko39/MAL-RU-Enhancements/refs/heads/main/MAL-RU-Enhancements.js) || [Установить с GreasyFork](https://greasyfork.org/en/scripts/527433-myanimelist-%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B5-%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B0%D0%BD%D0%B8%D0%BC%D0%B5) || [Установить с OpenUserJS](https://openuserjs.org/scripts/mwehehe/MyAnimeList(MAL)_%E2%80%94_%D1%80%D1%83%D1%81%D1%81%D0%BA%D0%BE%D0%B5_%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5_%D0%B0%D0%BD%D0%B8%D0%BC%D0%B5)
 # Как предложить описание, которого нет
-Предпочтительнее будет предложить описание на странице аниме на Шикимори, чтобы оно появилось сразу везде.
+Предпочтительнее будет предложить описание на странице аниме на Шикимори, чтобы оно появилось сразу везде. Так же можно предложить его через телеграм бота [@MalRuSuggestionBot](https://t.me/MalRuSuggestionBot)
 
-## Шикимори
 ![image](https://github.com/user-attachments/assets/4da757bb-840a-4002-afbc-5df358269006)
-
-## Telegram
-Используйте [@MalRuSuggestionBot](https://t.me/MalRuSuggestionBot)
 
 # Другие полезные скрипты
 > [Watch Order & Adaptations Finder](https://greasyfork.org/en/scripts/407727-watch-order-adaptations-finder) by [hacker09](https://greasyfork.org/en/users/670188-hacker09)
